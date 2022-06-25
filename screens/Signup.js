@@ -1,11 +1,12 @@
-import React, {useState} from "react";
-import { Alert, Image, Keyboard, KeyboardAvoidingView, Text, TextInput, TouchableWithoutFeedback, Pressable, View, StyleSheet } from "react-native";
-import { Button, SocialIcon } from "react-native-paper";
+import React, {Component, useState} from "react";
+import {Keyboard, KeyboardAvoidingView, Text,  TouchableWithoutFeedback, View, StyleSheet, BackHandler } from "react-native";
+import { Button, SocialIcon, TextInput } from "react-native-paper";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 import {auth} from '../firebase'
 import { useNavigation } from "@react-navigation/core";
 import firebase from "firebase/app";
-
+import {useBackHandler} from "@react-native-community/hooks"
+import {Ionicons} from '@expo/vector-icons';
 
 const Signup = () => {
 
@@ -17,6 +18,8 @@ const Signup = () => {
   const [error, setError] = useState("");
 
   const navigation = useNavigation()
+
+  useBackHandler(()=> true)
 
   const createAccount = async () => {
 
@@ -32,9 +35,8 @@ const Signup = () => {
       alert(e.message)
     }
   }
-
+  
   return (
-
     <KeyboardAvoidingView style={styles.containerView} behavior="padding">
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.loginScreenContainer}>
@@ -55,6 +57,7 @@ const Signup = () => {
               onChangeText={(text)=> setEmail(text)}
               placeholderColor="#c4c3cb" 
               style={styles.loginFormTextInput} 
+              keyboardType = "email-address"
             />
 
             <TextInput 
@@ -62,9 +65,11 @@ const Signup = () => {
               value={password}
               onChangeText={(text)=> setPassword(text)}
               placeholderColor="#c4c3cb" 
-              style={styles.loginFormTextInput} 
               secureTextEntry={true} 
+              style={styles.loginFormTextInput} 
             />
+
+            
             <View 
               style={{
                 flexDirection: "row",
@@ -73,14 +78,17 @@ const Signup = () => {
               }}
             >
             
-            <Button style={styles.fbLoginButton} type='clear' mode="outlined" color="#C20000" compact>Log In</Button>
-            <Button style={styles.loginButton} loading={isLoading} mode="contained" onPress={() => createAccount()} >Sign Up</Button>
+            <Button style={styles.loginButton} onPress={()=>navigation.navigate("Login")} type='clear' mode="outlined" color="#2C2C2C" compact>Log In</Button>
+            <Button style={styles.signUpButton} loading={isLoading} mode="contained" onPress={() => createAccount()} >Sign Up</Button>
             </View>
             
           </View>
         </View>
+        
       </TouchableWithoutFeedback>
+      
     </KeyboardAvoidingView>   
+    
   );
 }
 
@@ -98,13 +106,13 @@ const styles = StyleSheet.create({
     fontWeight: "800",
     marginBottom: 30,
     textAlign: "center",
-    color:"#900000",
+    color:"#212121",
     backfaceVisibility:"hidden"
   },
   loginFormView: {
     borderWidth: 1,
     borderRadius:20,
-    borderColor: "rgba(255, 0, 0,0.2)",
+    borderColor: "rgba(128, 128, 128,0.2)",
     position:"relative",
     top:"21%",
     padding:20
@@ -112,20 +120,20 @@ const styles = StyleSheet.create({
   loginFormTextInput: {
     height: 43,
     fontSize: 14,
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: "#eaeaea",
-    backgroundColor: "#FDF8F8",
+    borderWidth:1,
+    borderColor:"rgba(128, 128, 128,0.4)",
+    borderBottomWidth:0,
+    borderRadius:5,
     paddingLeft: 10,
     marginTop: 5,
     marginBottom: 10,
     width:280
   },
-  loginButton: {
-    backgroundColor:"#900000"
+  signUpButton: {
+    backgroundColor:"#2C2C2C"
   },
-  fbLoginButton: {
-    borderColor:"#C20000"
+  loginButton: {
+    borderColor:"#2C2C2C"
   },
 });
 
