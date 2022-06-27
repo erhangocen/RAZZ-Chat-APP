@@ -16,7 +16,7 @@ const Profile = () => {
     },[])
 
     return(
-        <View style={{alignItems:"center", margin:10, padding:25}}>
+        <View style={{alignItems:"center", margin:10, padding:25, backgroundColor:"black", flex:1, margin:0}}>
             <Avatar.Text label={name.split(" ").reduce((prev, current) => prev + current[0], "")}/>
             <Title style={{padding:5, marginTop:10}}>{name}</Title>
             <Subheading style={{padding:5}}>{email}</Subheading>

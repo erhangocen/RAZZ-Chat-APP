@@ -1,9 +1,13 @@
-import { useRoute } from "@react-navigation/native";
-import React, {useEffect, useState} from "react";
-import { Text, View } from "react-native";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import React, {useEffect, useState, useLayoutEffect, useCallback} from "react";
+import { Text, View, TouchableOpacity } from "react-native";
 import firebase from 'firebase/compat/app'
 import { GiftedChat, InputToolbar} from "react-native-gifted-chat";
 import { Header } from "react-native/Libraries/NewAppScreen";
+import {collection, addDoc, orderBy, query, onSnapshot} from "firebase/firestore"
+import {AntDesign} from "@expo/vector-icons"
+import { getAuth } from "firebase/auth";
+
 
 const Chat = () => {
 
@@ -11,8 +15,6 @@ const Chat = () => {
     const [messages, setMessages] = useState([]);
     const [uid, setUid] = useState("");
     const [name, setName] = useState("");
-
-    Header
     
     useEffect(() => {
         return firebase.auth().onAuthStateChanged((user)=>{
@@ -26,6 +28,7 @@ const Chat = () => {
             setMessages(snapshot.data()?.messages ?? []);
         })
     }, [route.params.chatId]);
+    
 
     const onSend = (m=[]) =>{
         firebase.firestore().doc("chats/" + route.params.chatId).set({    
@@ -33,12 +36,11 @@ const Chat = () => {
         },
         {merge:true}
         );
+        console.warn(route.params.chatId)
     };
 
     return(
-    <View style={{flex:1, backgroundColor:"black"}}
-        
-    >
+    <View style={{flex:1, backgroundColor:"white"}}>
         <GiftedChat 
             messages={messages.map(x=> ({...x, createdAt:x?.createdAt?.toDate()}))} 
             onSend={messages => onSend(messages)}

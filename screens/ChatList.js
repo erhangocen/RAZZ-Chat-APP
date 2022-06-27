@@ -4,6 +4,7 @@ import { List,Avatar,Divider,FAB,Portal,Dialog,Button,TextInput } from "react-na
 import firebase from "firebase/compat/app";
 import { async } from "@firebase/util";
 import { useNavigation } from "@react-navigation/core";
+import { getAuth } from "firebase/auth";
 
 
 const ChatList = () => {
@@ -44,6 +45,7 @@ const ChatList = () => {
     return(
         <View style={{flex:1, backgroundColor:"black"}}>
             {chats.map(chat=>(
+            
                 <React.Fragment>
                     <List.Item 
                         style={styles.container} 
@@ -70,7 +72,7 @@ const ChatList = () => {
                 <Dialog visible={isDialogVisible} onDismiss={()=> setIsDialogVisible(false)}>
                     <Dialog.Title>New Chat</Dialog.Title>
                     <Dialog.Content>
-                        <TextInput value={userEmail} onChangeText={text => setUserEmail(text)} label="Enter Room Code"></TextInput>
+                        <TextInput value={userEmail} onChangeText={text => setUserEmail(text)} label="Enter An Email"></TextInput>
                     </Dialog.Content>
                     <Dialog.Actions>
                         <Button onPress={()=>setIsDialogVisible(false)}>Cancel</Button>
@@ -83,6 +85,13 @@ const ChatList = () => {
                 icon="plus" 
                 style={{position: "absolute",bottom:16, right:16}}
                 onPress={()=> setIsDialogVisible(true)}
+            />
+
+            <FAB 
+                icon="bird" 
+                style={{position: "absolute",bottom:86, right:16}}
+                onPress={() => navigation.navigate("Chat", { chatId: "PBcaggZ4NPPSGYbybzc1"
+            })}
             />
             
         </View>

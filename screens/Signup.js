@@ -4,7 +4,7 @@ import { Button, SocialIcon, TextInput } from "react-native-paper";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 import {auth} from '../firebase'
 import { useNavigation } from "@react-navigation/core";
-import firebase from "firebase/app";
+import firebase from "firebase/compat/app";
 import {useBackHandler} from "@react-native-community/hooks"
 import {Ionicons} from '@expo/vector-icons';
 
@@ -25,9 +25,14 @@ const Signup = () => {
 
     setIsLoading(true);
 
+        
+
     try{
       const response = await createUserWithEmailAndPassword(auth,email,password);
       await updateProfile(response.user, {displayName: name})
+
+      
+
       navigation.popToTop();
     }
     catch(e){
@@ -35,7 +40,9 @@ const Signup = () => {
       alert(e.message)
     }
   }
-  
+
+  console.warn(firebase.firestore().collection("chat/lpsysmlUhYlONdNFSVSW").doc())
+
   return (
     <KeyboardAvoidingView style={styles.containerView} behavior="padding">
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

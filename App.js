@@ -17,6 +17,7 @@ import firebase from 'firebase/compat/app';
 import "firebase/auth";
 import "firebase/firestore";
 import { View } from "react-native-web"
+import {name} from "./screens/Chat"
 
 
 
@@ -58,7 +59,8 @@ const TabsNavigator = () => {
             tabBarStyle: {height:50, backgroundColor:"black", borderTopWidth:0},
             headerTitle:"RAZZ",
             headerStyle:{backgroundColor:"black"},
-            headerTitleStyle:{color:"white", fontWeight:"bold"}            
+            headerTitleStyle:{color:"white", fontWeight:"bold"},    
+            tabBarActiveTintColor:"#0937E2"
           })}
   >
     <Tabs.Screen name="Chats" component={ChatList} options={{ tabBarBadge: 55}}/>
@@ -82,8 +84,8 @@ const darkTheme = {
       roundness: 2,
       colors: {
         ...DarkTheme.colors,
-        primary: "#1AA",
-        accent: "#1AA"
+        primary: "#D6DDD4",
+        accent: "#0937E2"
       },
 };
 
@@ -102,8 +104,6 @@ const App = () => {
           <Stack.Screen 
             name="Chat" 
             component={Chat}
-            options={{headerStyle:{backgroundColor:"black",}, title:"Deniz"}}
-
           />
           <Stack.Screen 
             name="Signup" 
